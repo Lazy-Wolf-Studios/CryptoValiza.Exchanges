@@ -9,11 +9,22 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="CryptoValiza.Exchanges" />
-		<InternalsVisibleTo Include="CryptoValiza.Exchanges.Kuna" />
 		<InternalsVisibleTo Include="CryptoValiza.Exchanges.Binance" />
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.ByBit" />
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.Kuna" />
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.WhiteBit" />
 
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.Client" />
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.Services" />
 		<InternalsVisibleTo Include="$(AssemblyName).Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Models\Models.csproj" />
 	</ItemGroup>
 
 </Project>

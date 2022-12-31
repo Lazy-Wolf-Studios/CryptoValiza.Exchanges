@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoValiza.Exchanges", "CryptoValiza\CryptoValiza.Exchanges.csproj", "{709A762C-BD31-4A72-8E1D-B9008663A8C1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Binance", "Integrations\Binance\Binance.csproj", "{65D2C27F-6364-418F-A297-0C72BDFEEBC6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{1B7EAE25-EC60-46F1-98B3-CDDD283BF118}"
@@ -17,7 +15,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integration
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Tests", "Common.Tests\Common.Tests.csproj", "{E7BA3145-D88A-446C-BD0E-1CCF607D12B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{0030CDBE-BEF6-4622-9667-AD288B295874}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{0030CDBE-BEF6-4622-9667-AD288B295874}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{1227E304-8215-4E61-A6E6-068D49A94424}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client.Tests", "Client.Tests\Client.Tests.csproj", "{24F74348-8278-4CF9-A9F8-E339345ACE0A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ByBit", "Integrations\ByBit\ByBit.csproj", "{0A84ED7D-4351-4CCD-A2A7-AB4C6E03ACEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhiteBit", "Integrations\WhiteBit\WhiteBit.csproj", "{8C34312C-68CA-4F72-A8CE-C5473DF4AAAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +31,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{709A762C-BD31-4A72-8E1D-B9008663A8C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{709A762C-BD31-4A72-8E1D-B9008663A8C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{709A762C-BD31-4A72-8E1D-B9008663A8C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{709A762C-BD31-4A72-8E1D-B9008663A8C1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{65D2C27F-6364-418F-A297-0C72BDFEEBC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{65D2C27F-6364-418F-A297-0C72BDFEEBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65D2C27F-6364-418F-A297-0C72BDFEEBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,6 +55,22 @@ Global
 		{0030CDBE-BEF6-4622-9667-AD288B295874}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0030CDBE-BEF6-4622-9667-AD288B295874}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0030CDBE-BEF6-4622-9667-AD288B295874}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1227E304-8215-4E61-A6E6-068D49A94424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1227E304-8215-4E61-A6E6-068D49A94424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1227E304-8215-4E61-A6E6-068D49A94424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1227E304-8215-4E61-A6E6-068D49A94424}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F74348-8278-4CF9-A9F8-E339345ACE0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F74348-8278-4CF9-A9F8-E339345ACE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F74348-8278-4CF9-A9F8-E339345ACE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F74348-8278-4CF9-A9F8-E339345ACE0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A84ED7D-4351-4CCD-A2A7-AB4C6E03ACEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A84ED7D-4351-4CCD-A2A7-AB4C6E03ACEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A84ED7D-4351-4CCD-A2A7-AB4C6E03ACEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A84ED7D-4351-4CCD-A2A7-AB4C6E03ACEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C34312C-68CA-4F72-A8CE-C5473DF4AAAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C34312C-68CA-4F72-A8CE-C5473DF4AAAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C34312C-68CA-4F72-A8CE-C5473DF4AAAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C34312C-68CA-4F72-A8CE-C5473DF4AAAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +78,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{65D2C27F-6364-418F-A297-0C72BDFEEBC6} = {85EA3641-0FA8-4C14-BAA3-3F6970BB0683}
 		{F700D97D-F885-410C-9B57-F1C7F7DF8F53} = {85EA3641-0FA8-4C14-BAA3-3F6970BB0683}
+		{0A84ED7D-4351-4CCD-A2A7-AB4C6E03ACEB} = {85EA3641-0FA8-4C14-BAA3-3F6970BB0683}
+		{8C34312C-68CA-4F72-A8CE-C5473DF4AAAF} = {85EA3641-0FA8-4C14-BAA3-3F6970BB0683}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {167226CE-075D-42B8-A240-DE38B9E4DBF9}

@@ -1,5 +1,5 @@
 ﻿namespace CryptoValiza.Exchanges.Kuna.Models;
-public class Currency
+internal class Currency
 {
 	int Id { get; set; }                 //  "id": 2,            # internal ID
 	string Code { get; set; }            //  "code": "btc",      # currency symbol

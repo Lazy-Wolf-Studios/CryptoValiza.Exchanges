@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>CryptoValiza.Exchanges.Client</id>
+    <version>$version$</version>
+    <title>CryptoValiza.Exchanges.Client</title>
+    <authors>Lycanthrope</authors>
+    <owners>Lycanthrope</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Common Package for big amount of crypto CEXes</description>
+
+    <tags>Crypto</tags>
+    <dependencies>
+		<dependency id="Newtonsoft.Json" version="13.0.0" />
+    </dependencies>
+
+  </metadata>
+  <files>
+    <file src="..\Client\bin\Release\**\*.dll" target="lib" />
+    <file src="..\Client\bin\Release\**\*.pdb" target="lib" />
+    
+  </files>
+</package>

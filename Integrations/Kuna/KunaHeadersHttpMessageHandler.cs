@@ -14,7 +14,7 @@ internal class KunaHeadersHttpMessageHandler : DelegatingHandler
 
 	protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
 	{
-		var apiKey = _keyProvider.GetKey("Kuna", 1); // To do read from request properties
+		var apiKey = _keyProvider.GetKey("Kuna"); // To do read from request properties
 		var nonce = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
 		var apiPath = request.RequestUri.LocalPath;

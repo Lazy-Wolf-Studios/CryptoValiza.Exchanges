@@ -4,6 +4,8 @@ using System.Text.Json;
 using Xunit;
 
 namespace CryptoValiza.Exchanges.Common.Tests;
+
+[Trait("Category", "Unit")]
 public class SignRequestExtensionsTests
 {
 	[Fact]

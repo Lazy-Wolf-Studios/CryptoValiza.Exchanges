@@ -1,21 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AssemblyName>CryptoValiza.Exchanges.$(MSBuildProjectName)</AssemblyName>
-    <RootNamespace>CryptoValiza.Exchanges.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AssemblyName>CryptoValiza.Exchanges.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>CryptoValiza.Exchanges.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Integrations\Binance\Binance.csproj" />
-    <ProjectReference Include="..\Integrations\Kuna\Kuna.csproj" />
-    <ProjectReference Include="..\Models\Models.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Common\Common.csproj" />
+		<ProjectReference Include="..\Integrations\Binance\Binance.csproj" />
+		<ProjectReference Include="..\Integrations\ByBit\ByBit.csproj" />
+		<ProjectReference Include="..\Integrations\Kuna\Kuna.csproj" />
+		<ProjectReference Include="..\Integrations\WhiteBit\WhiteBit.csproj" />
+		<ProjectReference Include="..\Models\Models.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.Client" />
+	</ItemGroup>
 
 </Project>

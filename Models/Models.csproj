@@ -1,11 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AssemblyName>CryptoValiza.Exchanges.$(MSBuildProjectName)</AssemblyName>
-    <RootNamespace>CryptoValiza.Exchanges.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AssemblyName>CryptoValiza.Exchanges.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>CryptoValiza.Exchanges.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.Binance" />
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.ByBit" />
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.Kuna" />
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.WhiteBit" />
+		
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.Services" />
+		<InternalsVisibleTo Include="CryptoValiza.Exchanges.Client" />
+	</ItemGroup>
 
 </Project>

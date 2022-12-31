@@ -1,5 +1,5 @@
 ﻿namespace CryptoValiza.Exchanges.Kuna.Models;
-public class Market
+internal class Market
 {
 	string Id { get; set; }              // "id": "btcusdt",       
 	string Base_Unit { get; set; }       // "base_unit": "btc",    
