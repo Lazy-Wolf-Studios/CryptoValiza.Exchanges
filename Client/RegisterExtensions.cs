@@ -58,6 +58,7 @@ public static class RegisterExtensions
 	private static readonly Dictionary<CryptoExchange, string> apiAddresses = new()
 	{
 		{ CryptoExchange.Binance , "https://api.binance.com" },
+		{ CryptoExchange.BinanceUs, "https://api.binance.us" },
 		{ CryptoExchange.ByBit , "https://api.bybit.com"},
 		{ CryptoExchange.Kuna , "https://api.kuna.io" },
 		{ CryptoExchange.WhiteBit , "https://whitebit.com"},

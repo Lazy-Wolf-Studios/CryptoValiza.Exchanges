@@ -24,6 +24,7 @@ public class HealthCheckTests
 
 	[Theory]
 	[InlineData(CryptoExchange.Binance)]
+	[InlineData(CryptoExchange.BinanceUs)]
 	[InlineData(CryptoExchange.ByBit)]
 	[InlineData(CryptoExchange.Kuna)]
 	[InlineData(CryptoExchange.WhiteBit)]

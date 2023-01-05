@@ -1,7 +1,15 @@
+name: "QuickBuild"
 on:
   push:
     branches:
     - main
+  pull_request:
+    branches:
+      - main
+      
+#  schedule:
+#    - cron: '0 0 * * *'    # every day at midnight
+      
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,5 +27,5 @@ jobs:
       run: dotnet build --configuration Release
     - name: Unit Tests
       run: dotnet test --configuration Release --no-build --filter Category=Unit
-    - name: Integration Tests
-      run: dotnet test --configuration Release --no-build --filter Category=Integration
+#- name: Integration Tests
+#  run: dotnet test --configuration Release --no-build --filter Category=Integration

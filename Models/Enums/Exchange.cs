@@ -3,6 +3,7 @@
 public enum CryptoExchange
 {
 	Binance,
+	BinanceUs,
 	Bitfinex,
 	BitGet,
 	BitMex,
