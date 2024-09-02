@@ -1,4 +1,5 @@
 using CryptoValiza.Exchanges.Common.Utils;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Xunit;
@@ -26,7 +27,8 @@ public class SignRequestExtensionsTests
 
 		var signatureString = $"{testData.apiPath}{testData.nonce}{JsonSerializer.Serialize(testData.body)}";
 
-		var actual = SignRequestExtensions.ComputeSignature(signatureString, testData.secretKey);
+		var actual = HttpRequestExtensions.ComputeSignatureSHA384(signatureString, testData.secretKey)
+			.ToLowerHexits();
 		Assert.Equal(testData.expected, actual);
 	}
 }

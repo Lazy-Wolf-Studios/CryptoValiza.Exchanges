@@ -1,8 +1,8 @@
 ﻿using CryptoValiza.Exchanges.Binance.Models;
 using CryptoValiza.Exchanges.Common.Interfaces;
+using CryptoValiza.Exchanges.Common.Models;
 using CryptoValiza.Exchanges.Models;
 using CryptoValiza.Exchanges.Models.Enums;
-using CryptoValiza.Exchanges.Models.Infrastructure;
 using Newtonsoft.Json;
 
 namespace CryptoValiza.Exchanges.Binance.Services;

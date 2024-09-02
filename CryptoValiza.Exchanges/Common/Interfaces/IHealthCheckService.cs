@@ -4,5 +4,5 @@ namespace CryptoValiza.Exchanges.Common.Interfaces;
 
 internal interface IHealthCheckService
 {
-	Task<ServerTime> GetServerTime();
+	Task<ServerTime> GetServerTime(CancellationToken cancellationToken = default);
 }

@@ -3,6 +3,7 @@ using CryptoValiza.Exchanges.ByBit.Services;
 using CryptoValiza.Exchanges.Common.Interfaces;
 using CryptoValiza.Exchanges.Kuna.Services;
 using CryptoValiza.Exchanges.Models.Enums;
+using CryptoValiza.Exchanges.Models.Infrastructure;
 using CryptoValiza.Exchanges.WhiteBit.Services;
 
 namespace CryptoValiza.Exchanges.Services;
@@ -10,6 +11,7 @@ namespace CryptoValiza.Exchanges.Services;
 internal class ExchangesServiceFactory : IExchangesServiceFactory
 {
 	private readonly IHttpClientFactory _httpClientFactory;
+
 	internal ExchangesServiceFactory(IHttpClientFactory httpClientFactory)
 	{
 		_httpClientFactory = httpClientFactory;
@@ -70,6 +72,26 @@ internal class ExchangesServiceFactory : IExchangesServiceFactory
 				return new KunaTickersService(_httpClientFactory);
 			case CryptoExchange.Poloniex:
 				break;
+		}
+		throw new KeyNotFoundException();
+	}
+
+	public ITransfersService GetTransfersService(CryptoExchange exchangeCode)
+	{
+		switch (exchangeCode)
+		{
+			case CryptoExchange.Binance:
+				return new BinanceTransfersService(_httpClientFactory);
+		}
+		throw new KeyNotFoundException();
+	}
+
+	public IBalancesService GetBalancesService(CryptoExchange exchangeCode, ApiKey apiKey)
+	{
+		switch (exchangeCode)
+		{
+			case CryptoExchange.WhiteBit:
+				return new WhiteBitBalancesService(_httpClientFactory, apiKey);
 		}
 		throw new KeyNotFoundException();
 	}

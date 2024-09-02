@@ -1,7 +1,7 @@
 ﻿using CryptoValiza.Exchanges.Common.Interfaces;
+using CryptoValiza.Exchanges.Common.Models;
 using CryptoValiza.Exchanges.Models;
 using CryptoValiza.Exchanges.Models.Enums;
-using CryptoValiza.Exchanges.Models.Infrastructure;
 using CryptoValiza.Exchanges.WhiteBit.Models;
 using Newtonsoft.Json;
 
@@ -20,11 +20,9 @@ internal class WhiteBitHealthCheckService : IHealthCheckService
 
 
 
-	public async Task<ServerTime> GetServerTime()
+	public async Task<ServerTime> GetServerTime(CancellationToken cancellationToken = default)
 	{
 		var httpClient = _httpClientFactory.CreateClient(exchange);
-
-		var cancellationToken = CancellationToken.None;
 
 		var request = new HttpRequestMessage(GetServerTimeEndpoint.Method, GetServerTimeEndpoint.Url);
 
