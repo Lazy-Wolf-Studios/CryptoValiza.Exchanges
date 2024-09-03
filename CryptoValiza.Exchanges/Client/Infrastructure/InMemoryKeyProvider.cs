@@ -19,9 +19,11 @@ internal class InMemoryKeyProvider : IKeyProvider
 				SecretKey = apiKey.SecretKey,
 			}) & keysAreUnique;
 		}
-	}
 
-	public ApiKey GetKey(CryptoExchange cryptoExchange, string userId)
+        // TODO: what if failed to ?? throw if keysAreUnique=false 
+    }
+
+    public ApiKey GetKey(CryptoExchange cryptoExchange, string userId)
 	{
 		var key = ConstructKey(cryptoExchange.ToString(), userId);
 		return _apiKeys.TryGetValue(key, out var apiKey) ? apiKey : ApiKey.EmptyKey;

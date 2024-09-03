@@ -22,7 +22,6 @@ internal class ExchangesServiceFactory : IExchangesServiceFactory
 		switch (exchangeCode)
 		{
 			case CryptoExchange.Binance:
-			case CryptoExchange.BinanceUs:
 				return new BinanceHealthCheckService(_httpClientFactory);
 			case CryptoExchange.ByBit:
 				return new ByBitHealthCheckService(_httpClientFactory);

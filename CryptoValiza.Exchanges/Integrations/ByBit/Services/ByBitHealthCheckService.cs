@@ -1,72 +1,22 @@
 ﻿using CryptoValiza.Exchanges.ByBit.Models;
 using CryptoValiza.Exchanges.Common.Interfaces;
 using CryptoValiza.Exchanges.Common.Models;
+using CryptoValiza.Exchanges.Common.Utils;
 using CryptoValiza.Exchanges.Models;
-using CryptoValiza.Exchanges.Models.Enums;
-using Newtonsoft.Json;
 
 namespace CryptoValiza.Exchanges.ByBit.Services;
 
-internal class ByBitHealthCheckService : IHealthCheckService
+internal class ByBitHealthCheckService(IHttpClientFactory httpClientFactory)
+    : BaseBybitService(httpClientFactory), IHealthCheckService
 {
-	// curl https://api-testnet.bybit.com/v3/public/time
-	/*
-     
-    GET & DELETE methods (shared):
-        50 requests per second for 2 consecutive minutes
-        70 requests per second for 5 consecutive seconds
-    POST method:
-        20 requests per second for 2 consecutive minutes
-        50 requests per second for 5 consecutive seconds
+    private readonly Endpoint GetServerTimeEndpoint = new Endpoint(HttpMethod.Get, "/v3/public/time");
 
-     
-     */
-	/*
-	 
-	 {
-    "retCode": 0,
-    "retMsg": "OK",
-    "result": {
-        "timeSecond": "1664267152",
-        "timeNano": "1664267152228343045"
-    },
-    "retExtInfo": {},
-    "time": 1664267152228
-}
-	 
-	 
-	 */
-	private const string exchange = nameof(CryptoExchange.ByBit);
-	private readonly Endpoint GetServerTimeEndpoint = new Endpoint(HttpMethod.Get, "/v3/public/time");
-	private readonly IHttpClientFactory _httpClientFactory;
+    public async Task<ServerTime> GetServerTime(CancellationToken cancellationToken = default)
+    {
+        var response = await _httpClient.SendAsync<BaseResponse<TimeResponse>>(GetServerTimeEndpoint, cancellationToken);
 
-	public ByBitHealthCheckService(IHttpClientFactory httpClientFactory)
-	{
-		_httpClientFactory = httpClientFactory;
-	}
+        var result = new ServerTime(response.Result.TimeSecond, ServerTime.Size.Seconds);
 
-	public async Task<ServerTime> GetServerTime(CancellationToken cancellationToken = default)
-	{
-		var httpClient = _httpClientFactory.CreateClient(exchange);
-
-
-		var request = new HttpRequestMessage(GetServerTimeEndpoint.Method, GetServerTimeEndpoint.Url);
-
-		using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
-		var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-		response.EnsureSuccessStatusCode(); // check code
-
-
-
-		using var streamReader = new StreamReader(stream);
-		using var jsonTextReader = new JsonTextReader(streamReader);
-
-		var jsonSerializer = new JsonSerializer();
-		var result = jsonSerializer.Deserialize<BaseResponse<TimeResponse>>(jsonTextReader);
-
-		var resultR = result.Result;
-
-		return new ServerTime(resultR.TimeSecond, ServerTime.Size.Seconds);
-	}
-
+        return result;
+    }
 }

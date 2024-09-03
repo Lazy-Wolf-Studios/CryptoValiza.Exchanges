@@ -20,9 +20,11 @@ public class HealthCheckTests
             .GetRequiredService<IExchangesClient>();
     }
 
+    // TODO: should we use something like test urls?
+    // https://api-testnet.bybit.com
+
     [Theory]
     [InlineData(CryptoExchange.Binance)]
-    [InlineData(CryptoExchange.BinanceUs)]
     [InlineData(CryptoExchange.ByBit)]
     [InlineData(CryptoExchange.Kuna)]
     [InlineData(CryptoExchange.WhiteBit)]

@@ -11,7 +11,15 @@ public interface IExchangesClient
     /// <param name="exchangeCode"></param>
     /// <returns></returns>
     Task<ServerTime> GetServerTime(CryptoExchange exchangeCode);
-	Task<CurrencyTicker> GetTicker(CryptoExchange exchangeCode, string currencyCode);
+
+    /// <summary>
+    /// Some general info about CryptoCurrency.
+    /// TODO: will be modified, need to realize what info to get as "General". BTCUSDT - is not the best parameter
+    /// </summary>
+    /// <param name="exchangeCode"></param>
+    /// <param name="currencyCode"></param>
+    /// <returns></returns>
+    Task<CurrencyTicker> GetTicker(CryptoExchange exchangeCode, string currencyCode);
 
 
 	Task<IReadOnlyCollection<Deposit>> GetDeposits(CryptoExchange exchangeCode,

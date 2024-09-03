@@ -21,13 +21,6 @@ public class ExchangesClient(CryptoValizaSettings settings,
         return serverTime;
     }
 
-    /// <summary>
-    /// Some general info about CryptoCurrency.
-    /// </summary>
-    /// <param name="exchangeCode"></param>
-    /// <param name="currencyCode"></param>
-    /// <returns></returns>
-    // TODO: will be modified, need to realize what info to get as "General". BTCUSDT - is not the best parameter
     public async Task<CurrencyTicker> GetTicker(CryptoExchange exchangeCode, string currencyCode)
     {
         var service = _exchangeServiceFactory.GetTickersService(exchangeCode);
