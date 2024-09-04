@@ -1,12 +1,12 @@
 ﻿namespace CryptoValiza.Exchanges.Models.Infrastructure;
 
-internal class Endpoint
+internal record Endpoint
 {
-	internal Endpoint(HttpMethod method, string url)
-	{
-		this.Method = method;
-		this.Url = url;
-	}
-	internal HttpMethod Method { get; }
-	internal string Url { get; }
+    internal Endpoint(HttpMethod method, string url)
+    {
+        Method = method;
+        Url = url;
+    }
+    internal HttpMethod Method { get; }
+    internal string Url { get; }
 }

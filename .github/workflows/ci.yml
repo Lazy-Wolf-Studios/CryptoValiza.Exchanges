@@ -9,23 +9,30 @@ on:
       
 #  schedule:
 #    - cron: '0 0 * * *'    # every day at midnight
+
+env:
+  DOTNET_VERSION: '8.0.401' # The .NET SDK version to use
       
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: ./CryptoValiza.Exchanges
     steps:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Setup .NET 8
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0'
+        dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: Install dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release
     - name: Unit Tests
       run: dotnet test --configuration Release --no-build --filter Category=Unit
-#- name: Integration Tests
-#  run: dotnet test --configuration Release --no-build --filter Category=Integration
+    - name: Integration Tests
+      run: dotnet test --configuration Release --no-build --filter Category=Integration
+      continue-on-error: true

@@ -2,15 +2,15 @@
 
 internal class Ticker
 {
-	public string Symbol { get; set; }
-	public decimal PriceBid { get; set; }
-	public decimal OrderbookVolumeBid { get; set; }
-	public decimal PriceAsk { get; set; }
-	public decimal OrderbookVolumeAsk { get; set; }
-	public decimal PriceChangeTarget { get; set; }
-	public decimal PriceChangePercent { get; set; }
-	public decimal LastPrice { get; set; }
-	public decimal TradingVolume { get; set; }
-	public decimal MaxPrice { get; set; }
-	public decimal MinPrice { get; set; }
+    public string Pair { get; set; }
+    public string PercentagePriceChange { get; set; }
+    public string Price { get; set; }
+    public string EquivalentPrice { get; set; }
+    public string High { get; set; }
+    public string Low { get; set; }
+    public string BaseVolume { get; set; }
+    public string QuoteVolume { get; set; }
+    public string BestBidPrice { get; set; }
+    public string BestAskPrice { get; set; }
+    public string PriceChange { get; set; }
 }

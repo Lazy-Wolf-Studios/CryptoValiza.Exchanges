@@ -1,20 +1,20 @@
-﻿using CryptoValiza.Exchanges.Common.Infrastructure;
+﻿
 using CryptoValiza.Exchanges.Common.Utils;
 using System.Net.Http.Headers;
 
 namespace CryptoValiza.Exchanges.Kuna;
 internal class KunaHeadersHttpMessageHandler : DelegatingHandler
 {
-	private readonly IKeyProvider _keyProvider;
+	//private readonly IKeyProvider _keyProvider;
 
-	public KunaHeadersHttpMessageHandler(IKeyProvider keyProvider)
-	{
-		_keyProvider = keyProvider;
-	}
+	//public KunaHeadersHttpMessageHandler(IKeyProvider keyProvider)
+	//{
+	//	_keyProvider = keyProvider;
+	//}
 
 	protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
 	{
-		var apiKey = _keyProvider.GetKey("Kuna"); // To do read from request properties
+		var apiKey = ""; // _keyProvider.GetKey("Kuna"); // To do read from request properties
 		var nonce = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
 		var apiPath = request.RequestUri.LocalPath;
@@ -31,11 +31,12 @@ internal class KunaHeadersHttpMessageHandler : DelegatingHandler
 
 		var signatureString = $"{apiPath}{nonce}{body}";
 
-		var signature = SignRequestExtensions.ComputeSignature(signatureString, apiKey.SecretKey);
+		var signature = HttpRequestExtensions.ComputeSignatureSHA384(signatureString, apiKey)
+            .ToLowerHexits(); // apiKey.SecretKey);
 
 		request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 		request.Headers.Add("kun-nonce", nonce.ToString());
-		request.Headers.Add("kun-apikey", apiKey.PublicKey);
+		request.Headers.Add("kun-apikey", apiKey);// apiKey.PublicKey);
 		request.Headers.Add("kun-signature", signature);
 
 		return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
