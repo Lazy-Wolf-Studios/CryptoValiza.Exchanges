@@ -1,4 +1,4 @@
-﻿using CryptoValiza.Exchanges.Common.Models;
+﻿using CryptoValiza.Exchanges.Models.Infrastructure;
 
 namespace CryptoValiza.Exchanges.Common.Utils;
 

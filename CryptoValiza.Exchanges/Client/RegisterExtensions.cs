@@ -1,5 +1,10 @@
-﻿using CryptoValiza.Exchanges.Client.Infrastructure;
+﻿using CryptoValiza.Exchanges.Binance.Services;
+using CryptoValiza.Exchanges.ByBit.Services;
+using CryptoValiza.Exchanges.Client.Infrastructure;
+using CryptoValiza.Exchanges.Kuna.Services;
 using CryptoValiza.Exchanges.Models.Enums;
+using CryptoValiza.Exchanges.Services.Interfaces;
+using CryptoValiza.Exchanges.WhiteBit.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Headers;
 
@@ -7,7 +12,8 @@ namespace CryptoValiza.Exchanges.Client;
 
 public static class RegisterExtensions
 {
-    public static IServiceCollection AddCryptoValiza(this IServiceCollection services, CryptoValizaSettings? settings = null)
+    public static IServiceCollection AddCryptoValiza(this IServiceCollection services,
+        CryptoValizaSettings? settings = null)
     {
         settings ??= new CryptoValizaSettings
         {
@@ -16,22 +22,10 @@ public static class RegisterExtensions
 
         services.RegisterClients(settings);
         services.RegisterKeyProvider(settings);
+        services.RegisterServices(settings);
 
         services.AddSingleton(settings);
         services.AddSingleton<IExchangesClient, ExchangesClient>();
-
-        return services;
-    }
-    private static IServiceCollection RegisterKeyProvider(this IServiceCollection services, CryptoValizaSettings settings)
-    {
-        if (settings?.KeyRecords?.Any() == true)
-        {
-            services.AddSingleton<IKeyProvider, InMemoryKeyProvider>();
-        }
-        else
-        {
-            services.AddSingleton<IKeyProvider, EmptyKeyProvider>();
-        }
 
         return services;
     }
@@ -75,4 +69,36 @@ public static class RegisterExtensions
         { CryptoExchange.WhiteBit , "https://whitebit.com"},
 
     };
+    private static IServiceCollection RegisterKeyProvider(this IServiceCollection services, CryptoValizaSettings settings)
+    {
+        if (settings?.KeyRecords?.Any() == true)
+        {
+            services.AddSingleton<IKeyProvider, InMemoryKeyProvider>();
+        }
+        else
+        {
+            services.AddSingleton<IKeyProvider, EmptyKeyProvider>();
+        }
+
+        return services;
+    }
+
+    private static IServiceCollection RegisterServices(this IServiceCollection services, CryptoValizaSettings settings)
+    {
+        RegisterHealthCheckService(services, settings);
+
+        return services;
+    }
+
+    private static IServiceCollection RegisterHealthCheckService(this IServiceCollection services, CryptoValizaSettings settings)
+    {
+        // TODO: check settings, register only needed
+        services.AddKeyedSingleton<IHealthCheckService, KunaHealthCheckService>(CryptoExchange.Kuna.GetExchangeName());
+        services.AddKeyedSingleton<IHealthCheckService, ByBitHealthCheckService>(CryptoExchange.ByBit.GetExchangeName());
+        services.AddKeyedSingleton<IHealthCheckService, BinanceHealthCheckService>(CryptoExchange.Binance.GetExchangeName());
+        services.AddKeyedSingleton<IHealthCheckService, WhiteBitHealthCheckService>(CryptoExchange.WhiteBit.GetExchangeName());
+
+
+        return services;
+    }
 }

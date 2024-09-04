@@ -1,8 +1,8 @@
-﻿using CryptoValiza.Exchanges.Common.Interfaces;
-using CryptoValiza.Exchanges.Common.Models;
-using CryptoValiza.Exchanges.Common.Utils;
+﻿using CryptoValiza.Exchanges.Common.Utils;
 using CryptoValiza.Exchanges.Kuna.Models;
 using CryptoValiza.Exchanges.Models;
+using CryptoValiza.Exchanges.Models.Infrastructure;
+using CryptoValiza.Exchanges.Services.Interfaces;
 
 namespace CryptoValiza.Exchanges.Kuna.Services;
 

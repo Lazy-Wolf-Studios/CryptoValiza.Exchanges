@@ -1,36 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<RootNamespace>CryptoValiza.Exchanges.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-		<AssemblyName>CryptoValiza.Exchanges.$(MSBuildProjectName)</AssemblyName>
-		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-		<Title>CryptoValiza.Exchanges</Title>
-		<AnalysisLevel>6.0</AnalysisLevel>
-		<IncludeSymbols>False</IncludeSymbols>
-		<PackAsTool>False</PackAsTool>
-		<ProduceReferenceAssembly>True</ProduceReferenceAssembly>
-		<!--<NuspecFile>PATH_TO_NUSPEC_FILE</NuspecFile>
-		<NuspecProperties>add nuspec properties here</NuspecProperties>-->
-		
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>CryptoValiza.Exchanges.$(MSBuildProjectName)</AssemblyName>
+        <RootNamespace>CryptoValiza.Exchanges.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<InternalsVisibleTo Include="$(AssemblyName).Tests" />
-	</ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Integrations\Binance\Binance.csproj" />
+        <ProjectReference Include="..\Integrations\ByBit\ByBit.csproj" />
+        <ProjectReference Include="..\Integrations\Kuna\Kuna.csproj" />
+        <ProjectReference Include="..\Integrations\WhiteBit\WhiteBit.csproj" />
+        <ProjectReference Include="..\Models\Models.csproj" />
+        <ProjectReference Include="..\Services\Services.csproj" />
+    </ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Integrations\Binance\Binance.csproj" />
-	  <ProjectReference Include="..\Integrations\ByBit\ByBit.csproj" />
-	  <ProjectReference Include="..\Integrations\Kuna\Kuna.csproj" />
-	  <ProjectReference Include="..\Integrations\WhiteBit\WhiteBit.csproj" />
-	  <ProjectReference Include="..\Models\Models.csproj" />
-	  <ProjectReference Include="..\Services\Services.csproj" />
-	</ItemGroup>
 </Project>

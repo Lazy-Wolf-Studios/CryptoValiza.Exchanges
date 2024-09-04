@@ -1,30 +1,30 @@
-﻿using CryptoValiza.Exchanges.Common.Interfaces;
-using CryptoValiza.Exchanges.Common.Models;
-using CryptoValiza.Exchanges.Models;
+﻿using CryptoValiza.Exchanges.Models;
 using CryptoValiza.Exchanges.Models.Enums;
+using CryptoValiza.Exchanges.Models.Infrastructure;
+using CryptoValiza.Exchanges.Services.Interfaces;
 
 namespace CryptoValiza.Exchanges.Binance.Services;
 
 internal class BinanceTransfersService : ITransfersService
 {
-	private const string exchange = nameof(CryptoExchange.Binance);
-	private readonly Endpoint GetDepositsEndpoint = new Endpoint(HttpMethod.Get, "sapi/v1/capital/deposit/hisrec");
-	private readonly Endpoint GetWithdrawalsEndpoint = new Endpoint(HttpMethod.Get, "sapi/v1/capital/withdraw/history");
-	private readonly Endpoint GetC2CTradeHistoryEndpoint = new Endpoint(HttpMethod.Get, "");
+    private const string exchange = nameof(CryptoExchange.Binance);
+    private readonly Endpoint GetDepositsEndpoint = new Endpoint(HttpMethod.Get, "sapi/v1/capital/deposit/hisrec");
+    private readonly Endpoint GetWithdrawalsEndpoint = new Endpoint(HttpMethod.Get, "sapi/v1/capital/withdraw/history");
+    private readonly Endpoint GetC2CTradeHistoryEndpoint = new Endpoint(HttpMethod.Get, "");
 
-	private readonly Endpoint GetFiatOrdersEndpoint = new Endpoint(HttpMethod.Get, "sapi/v1/fiat/orders");
-	private readonly Endpoint GetFiatPaymentsEndpoint = new Endpoint(HttpMethod.Get, "");
+    private readonly Endpoint GetFiatOrdersEndpoint = new Endpoint(HttpMethod.Get, "sapi/v1/fiat/orders");
+    private readonly Endpoint GetFiatPaymentsEndpoint = new Endpoint(HttpMethod.Get, "");
 
-	private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IHttpClientFactory _httpClientFactory;
 
-	public BinanceTransfersService(IHttpClientFactory httpClientFactory)
-	{
-		_httpClientFactory = httpClientFactory;
-	}
+    public BinanceTransfersService(IHttpClientFactory httpClientFactory)
+    {
+        _httpClientFactory = httpClientFactory;
+    }
 
 
 
-	/*
+    /*
     Please notice the default startTime and endTime to make sure that time interval is within 0-90 days.
     If both startTime and endTime are sent, time between startTime and endTime must be less than 90 days.
 
@@ -55,18 +55,18 @@ internal class BinanceTransfersService : ITransfersService
         "walletType": 0
     }
 	 */
-	public async Task<IReadOnlyCollection<Deposit>> GetDeposits()
-	{
-		var deposits = new List<Deposit>();
+    public async Task<IReadOnlyCollection<Deposit>> GetDeposits()
+    {
+        var deposits = new List<Deposit>();
 
-		return deposits;
-	}
-
-
+        return deposits;
+    }
 
 
 
-	/*
+
+
+    /*
 	 
 	coin 	STRING 	NO 	
 	withdrawOrderId 	STRING 	NO 	
@@ -86,8 +86,8 @@ internal class BinanceTransfersService : ITransfersService
 
 	 */
 
-	public Task<IReadOnlyCollection<Withdrawal>> GetWithdrawals()
-	{
-		throw new NotImplementedException();
-	}
+    public Task<IReadOnlyCollection<Withdrawal>> GetWithdrawals()
+    {
+        throw new NotImplementedException();
+    }
 }

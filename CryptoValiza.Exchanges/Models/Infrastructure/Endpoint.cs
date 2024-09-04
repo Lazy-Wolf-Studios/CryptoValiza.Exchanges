@@ -1,4 +1,4 @@
-﻿namespace CryptoValiza.Exchanges.Common.Models;
+﻿namespace CryptoValiza.Exchanges.Models.Infrastructure;
 
 internal record Endpoint
 {

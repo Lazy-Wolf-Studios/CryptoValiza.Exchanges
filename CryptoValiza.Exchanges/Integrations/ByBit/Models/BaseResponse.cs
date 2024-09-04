@@ -8,7 +8,7 @@ internal class BaseResponse<T> where T : new()
         "retMsg": "OK",
         "result": {},
         "retExtInfo": null,
-    "time": 1665997272757
+        "time": 1665997272757
     }
     */
 

@@ -1,8 +1,7 @@
-﻿using CryptoValiza.Exchanges.Client;
-using CryptoValiza.Exchanges.Models.Enums;
-using Xunit;
+﻿using CryptoValiza.Exchanges.Models.Enums;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Client.Tests.IntegrationTests;
+namespace CryptoValiza.Exchanges.Client.Tests.IntegrationTests;
 
 [Trait("Category", "Integration")]
 public class HealthCheckTests
