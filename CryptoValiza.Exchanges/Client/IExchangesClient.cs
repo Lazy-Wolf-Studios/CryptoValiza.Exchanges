@@ -15,6 +15,7 @@ public interface IExchangesClient
     /// <summary>
     /// Some general info about CryptoCurrency.
     /// TODO: will be modified, need to realize what info to get as "General". BTCUSDT - is not the best parameter
+    /// TODO: understand which data to return, CExes return very different data
     /// </summary>
     /// <param name="exchangeCode"></param>
     /// <param name="currencyCode"></param>

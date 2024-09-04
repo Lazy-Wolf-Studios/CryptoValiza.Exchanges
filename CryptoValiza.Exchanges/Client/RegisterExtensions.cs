@@ -98,7 +98,9 @@ public static class RegisterExtensions
         services.AddKeyedSingleton<IHealthCheckService, BinanceHealthCheckService>(CryptoExchange.Binance.GetExchangeName());
         services.AddKeyedSingleton<IHealthCheckService, WhiteBitHealthCheckService>(CryptoExchange.WhiteBit.GetExchangeName());
 
-
+        services.AddKeyedSingleton<ITickersService, BinanceTickersService>(CryptoExchange.Binance.GetExchangeName());
+        services.AddKeyedSingleton<ITickersService, KunaTickersService>(CryptoExchange.Kuna.GetExchangeName());
+        
         return services;
     }
 }

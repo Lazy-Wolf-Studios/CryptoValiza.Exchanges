@@ -1,64 +1,32 @@
-﻿using CryptoValiza.Exchanges.Kuna.Models;
+﻿using CryptoValiza.Exchanges.Common.Utils;
+using CryptoValiza.Exchanges.Kuna.Models;
 using CryptoValiza.Exchanges.Models;
 using CryptoValiza.Exchanges.Models.Infrastructure;
 using CryptoValiza.Exchanges.Services.Interfaces;
-using Newtonsoft.Json;
 
 namespace CryptoValiza.Exchanges.Kuna.Services;
-internal class KunaTickersService : ITickersService
+internal class KunaTickersService(IHttpClientFactory httpClientFactory) : BaseKunaService(httpClientFactory), ITickersService
 {
-    private const string exchange = nameof(Exchanges.Models.Enums.CryptoExchange.Kuna);
-    private readonly Endpoint GetServerTimeEndpoint = new Endpoint(HttpMethod.Get, "/v3/timestamp");
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly Endpoint GetTickerEndpoint = new Endpoint(HttpMethod.Get, "/v4/markets/public/tickers?pairs={symbol}");
 
-    public KunaTickersService(IHttpClientFactory httpClientFactory)
+    public async Task<CurrencyTicker> GetTicker(string currencyTag, CancellationToken cancellationToken = default)
     {
-        _httpClientFactory = httpClientFactory;
-    }
+        currencyTag = "BTC_USDT";
+        var endPoint = new Endpoint(GetTickerEndpoint.Method, GetTickerEndpoint.Url.Replace("{symbol}", currencyTag));
 
+        var response = await _httpClient.SendAsync<BaseResponse<List<Ticker>>>(endPoint, cancellationToken);
 
-    public async Task<CurrencyTicker> GetTicker(string currencyTag)
-    {
-        var httpClient = _httpClientFactory.CreateClient(exchange);
-
-        var cancellationToken = CancellationToken.None;
-
-        var request = new HttpRequestMessage(GetServerTimeEndpoint.Method, GetServerTimeEndpoint.Url);
-
-        using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
-        var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-        response.EnsureSuccessStatusCode(); // check code
-
-        using var streamReader = new StreamReader(stream);
-        using var jsonTextReader = new JsonTextReader(streamReader);
-
-        var jsonSerializer = new JsonSerializer();
-        var result = jsonSerializer.Deserialize<IEnumerable<object[]>>(jsonTextReader);
-
-        var resultTyped = result.Select(x => new Ticker
+        var result = response?.Data?.Select(x => new CurrencyTicker
         {
-            Symbol = x[0].ToString(),
-            PriceBid = decimal.Parse(x[1].ToString()),
-            OrderbookVolumeBid = decimal.Parse(x[2].ToString()),
-            PriceAsk = decimal.Parse(x[3].ToString()),
-            OrderbookVolumeAsk = decimal.Parse(x[4].ToString()),
-            PriceChangeTarget = decimal.Parse(x[5].ToString()),
-            PriceChangePercent = decimal.Parse(x[6].ToString()),
-            LastPrice = decimal.Parse(x[7].ToString()),
-            TradingVolume = decimal.Parse(x[8].ToString()),
-            MaxPrice = decimal.Parse(x[9].ToString()),
-            MinPrice = decimal.Parse(x[10].ToString()),
-        }).First();
+            Symbol = x.Pair,
+            PriceChange = decimal.Parse(x.PriceChange),
+            PriceChangePercent = decimal.Parse(x.PercentagePriceChange),
+            TradingVolume = decimal.Parse(x.BaseVolume),
+            LastPrice = decimal.Parse(x.Price),
+            MaxPrice = decimal.Parse(x.High),
+            MinPrice = decimal.Parse(x.Low)
+        }).FirstOrDefault(new CurrencyTicker());
 
-        return new CurrencyTicker
-        {
-            Symbol = resultTyped.Symbol,
-            PriceChange = resultTyped.PriceChangeTarget,
-            PriceChangePercent = resultTyped.PriceChangePercent,
-            TradingVolume = resultTyped.TradingVolume,
-            LastPrice = resultTyped.LastPrice,
-            MaxPrice = resultTyped.MaxPrice,
-            MinPrice = resultTyped.MinPrice
-        };
+        return result ?? new CurrencyTicker();
     }
 }
