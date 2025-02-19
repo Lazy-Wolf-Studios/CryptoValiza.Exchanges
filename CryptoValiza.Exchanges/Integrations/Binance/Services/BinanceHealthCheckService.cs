@@ -1,48 +1,22 @@
 ﻿using CryptoValiza.Exchanges.Binance.Models;
-using CryptoValiza.Exchanges.Common.Interfaces;
+using CryptoValiza.Exchanges.Common.Utils;
 using CryptoValiza.Exchanges.Models;
-using CryptoValiza.Exchanges.Models.Enums;
 using CryptoValiza.Exchanges.Models.Infrastructure;
-using Newtonsoft.Json;
+using CryptoValiza.Exchanges.Services.Interfaces;
 
 namespace CryptoValiza.Exchanges.Binance.Services;
-internal class BinanceHealthCheckService : IHealthCheckService
+
+internal class BinanceHealthCheckService(IHttpClientFactory httpClientFactory)
+    : BaseBinanceService(httpClientFactory), IHealthCheckService
 {
-    private const string exchange = nameof(CryptoExchange.Binance);
     private readonly Endpoint GetServerTimeEndpoint = new Endpoint(HttpMethod.Get, "api/v3/time");
-    private readonly IHttpClientFactory _httpClientFactory;
 
-    public BinanceHealthCheckService(IHttpClientFactory httpClientFactory)
+    public async Task<ServerTime> GetServerTime(CancellationToken cancellationToken = default)
     {
-        _httpClientFactory = httpClientFactory;
-    }
+        var response = await _httpClient.SendAsync<TimeResponse>(GetServerTimeEndpoint, cancellationToken);
 
-    //public async Task<ServerTime> GetServerTime()
-    //{
-    //    var httpClient = _httpClientFactory.CreateClient(exchange);
-    //    var response = await httpClient.GetFromJsonAsync<TimeResponse>(GetServerTimeEndpoint.Url);
-    //    return new ServerTime(response.ServerTime);
-    //}
+        var result = new ServerTime(response.ServerTime, ServerTime.Size.MilliSeconds);
 
-
-    public async Task<ServerTime> GetServerTime()
-    {
-        var httpClient = _httpClientFactory.CreateClient(exchange);
-
-        var cancellationToken = CancellationToken.None;
-
-        var request = new HttpRequestMessage(GetServerTimeEndpoint.Method, GetServerTimeEndpoint.Url);
-
-        using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
-        var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-        response.EnsureSuccessStatusCode(); // check code
-
-        using var streamReader = new StreamReader(stream);
-        using var jsonTextReader = new JsonTextReader(streamReader);
-
-        var jsonSerializer = new JsonSerializer();
-        var result = jsonSerializer.Deserialize<TimeResponse>(jsonTextReader);
-
-        return new ServerTime(result.ServerTime, ServerTime.Size.MilliSeconds);
+        return result;
     }
 }
