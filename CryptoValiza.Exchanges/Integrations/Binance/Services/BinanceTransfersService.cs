@@ -1,28 +1,62 @@
-﻿using CryptoValiza.Exchanges.Models;
-using CryptoValiza.Exchanges.Models.Enums;
+using CryptoValiza.Exchanges.Binance.Models;
+using CryptoValiza.Exchanges.Binance.Models.Responses;
+using CryptoValiza.Exchanges.Common.Utils;
+using CryptoValiza.Exchanges.Models;
 using CryptoValiza.Exchanges.Models.Infrastructure;
 using CryptoValiza.Exchanges.Services.Interfaces;
 
 namespace CryptoValiza.Exchanges.Binance.Services;
 
-internal class BinanceTransfersService : ITransfersService
+internal class BinanceTransfersService(IHttpClientFactory httpClientFactory) : BaseBinancePrivateService(httpClientFactory), ITransfersService
 {
-    private const string exchange = nameof(CryptoExchange.Binance);
     private readonly Endpoint GetDepositsEndpoint = new Endpoint(HttpMethod.Get, "sapi/v1/capital/deposit/hisrec");
     private readonly Endpoint GetWithdrawalsEndpoint = new Endpoint(HttpMethod.Get, "sapi/v1/capital/withdraw/history");
-    private readonly Endpoint GetC2CTradeHistoryEndpoint = new Endpoint(HttpMethod.Get, "");
 
     private readonly Endpoint GetFiatOrdersEndpoint = new Endpoint(HttpMethod.Get, "sapi/v1/fiat/orders");
     private readonly Endpoint GetFiatPaymentsEndpoint = new Endpoint(HttpMethod.Get, "");
 
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly Endpoint GetC2CTradeHistoryEndpoint = new Endpoint(HttpMethod.Get, "sapi/v1/c2c/orderMatch/listUserOrderHistory");
 
-    public BinanceTransfersService(IHttpClientFactory httpClientFactory)
+    public async Task<IReadOnlyCollection<FiatDeposit>> GetFiatDeposits(ApiKey apiKey, DateTimeOffset startDate, DateTimeOffset endDate, CancellationToken cancellationToken = default)
     {
-        _httpClientFactory = httpClientFactory;
+        var deposits = new List<FiatDeposit>();
+
+        // split datetime to 30 days periods and call in a loop
+        var queryParams = new Dictionary<string, string>
+        {
+
+            { "tradeType", "BUY" },
+            { "startTimestamp", startDate.ToUnixTimeMilliseconds().ToString() },
+            { "endTimestamp", endDate.ToUnixTimeMilliseconds().ToString() },
+
+            { "timestamp", HttpRequestExtensions.GetNonce() },
+
+            /*
+tradeType 	STRING 	YES 	BUY, SELL
+startTimestamp 	LONG 	NO 	
+endTimestamp 	LONG 	NO 	
+page 	INT 	NO 	default 1
+rows 	INT 	NO 	default 100, max 100
+recvWindow 	LONG 	NO 	
+timestamp 	LONG 	YES
+             */
+
+        };
+
+
+        var queryParamsString = GetQueryParamsWithSignature(apiKey, queryParams);
+        var headers = GetHeaders(apiKey);
+
+        var result = await _httpClient.Get<BaseResponseV1<List<C2CTradeHistoryResponse>>>(GetC2CTradeHistoryEndpoint, queryParamsString, headers, cancellationToken);
+        var resultValues = result?.Data?.Select(x => x.ToFiatDeposit());
+
+        return deposits;
     }
 
-
+    public Task<IReadOnlyCollection<FiatWithdrawal>> GetFiatWithdrawals(ApiKey apiKey, DateTime startDate, DateTime endDate, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
 
     /*
     Please notice the default startTime and endTime to make sure that time interval is within 0-90 days.
@@ -55,9 +89,9 @@ internal class BinanceTransfersService : ITransfersService
         "walletType": 0
     }
 	 */
-    public async Task<IReadOnlyCollection<Deposit>> GetDeposits()
+    public async Task<IReadOnlyCollection<CryptoDeposit>> GetCryptoDeposits(ApiKey apiKey, DateTime startDate, DateTime endDate, CancellationToken cancellationToken = default)
     {
-        var deposits = new List<Deposit>();
+        var deposits = new List<CryptoDeposit>();
 
         return deposits;
     }
@@ -86,8 +120,9 @@ internal class BinanceTransfersService : ITransfersService
 
 	 */
 
-    public Task<IReadOnlyCollection<Withdrawal>> GetWithdrawals()
+    public Task<IReadOnlyCollection<CryptoWithdrawal>> GetCryptoWithdrawals(ApiKey apiKey, DateTime startDate, DateTime endDate, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
+
 }

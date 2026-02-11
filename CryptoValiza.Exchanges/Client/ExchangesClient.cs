@@ -1,4 +1,5 @@
-﻿using CryptoValiza.Exchanges.Models;
+using CryptoValiza.Exchanges.Common.Interfaces;
+using CryptoValiza.Exchanges.Models;
 using CryptoValiza.Exchanges.Models.Enums;
 using CryptoValiza.Exchanges.Models.Errors;
 using CryptoValiza.Exchanges.Models.Infrastructure;
@@ -7,13 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CryptoValiza.Exchanges.Client;
 
-public class ExchangesClient(CryptoValizaSettings settings,
-    IKeyProvider keyProvider,
+public class ExchangesClient(IKeyProvider keyProvider,
     IServiceProvider serviceProvider) : IExchangesClient
 {
-    private readonly CryptoValizaSettings _settings = settings;
     private readonly IKeyProvider _keyProvider = keyProvider;
     private readonly IServiceProvider _serviceProvider = serviceProvider;
+
     public async Task<ServerTime> GetServerTime(CryptoExchange exchangeCode)
     {
         var service = GetService<IHealthCheckService>(exchangeCode);
@@ -29,23 +29,33 @@ public class ExchangesClient(CryptoValizaSettings settings,
     }
 
 
-    public async Task<IReadOnlyCollection<Deposit>> GetDeposits(CryptoExchange exchangeCode, DateTime startDate, DateTime endDate)
+
+
+
+
+    public async Task<IReadOnlyCollection<FiatDeposit>> GetFiatDeposits(CryptoExchange exchangeCode, string userId, DateTime startDate, DateTime endDate)
     {
-        // TODO: what if exchange code is not among supported, but key was not provided? 
-        if (!_settings.ConnectedExchanges.Contains(exchangeCode))
-        {
-            // TODO: how to provide userId? Multiuser client or single user client?
-            // GetApiKey(exchangeCode, userId);
-
-        }
-
+        var apiKey = GetApiKey(exchangeCode, userId);
         var service = GetService<ITransfersService>(exchangeCode);
-        var deposits = await service.GetDeposits();
-        return deposits;
-
+        var start = new DateTimeOffset(startDate);
+        var end = new DateTimeOffset(endDate);
+        return await service.GetFiatDeposits(apiKey, start, end);
     }
 
-    public Task<IReadOnlyCollection<Withdrawal>> GetWithdrawals(CryptoExchange exchangeCode, DateTime startDate, DateTime endDate)
+
+    public async Task<IReadOnlyCollection<CryptoDeposit>> GetCryptoDeposits(CryptoExchange exchangeCode, string userId, DateTime startDate, DateTime endDate)
+    {
+        var apiKey = GetApiKey(exchangeCode, userId);
+        var service = GetService<ITransfersService>(exchangeCode);
+        return await service.GetCryptoDeposits(apiKey, startDate, endDate);
+    }
+
+    public Task<IReadOnlyCollection<FiatWithdrawal>> GetFiatWithdrawals(CryptoExchange exchangeCode, string userId, DateTime startDate, DateTime endDate)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IReadOnlyCollection<CryptoWithdrawal>> GetCryptoWithdrawals(CryptoExchange exchangeCode, string userId, DateTime startDate, DateTime endDate)
     {
         throw new NotImplementedException();
     }
@@ -54,8 +64,7 @@ public class ExchangesClient(CryptoValizaSettings settings,
     {
         var apiKey = GetApiKey(exchangeCode, userId);
         var service = GetService<IBalancesService>(exchangeCode);
-        var balances = await service.GetBalances();
-        return balances;
+        return await service.GetBalances(apiKey);
     }
 
     private T GetService<T>(CryptoExchange exchangeCode)

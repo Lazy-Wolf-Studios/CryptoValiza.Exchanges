@@ -1,4 +1,4 @@
-﻿using CryptoValiza.Exchanges.Models;
+using CryptoValiza.Exchanges.Models;
 using CryptoValiza.Exchanges.Models.Enums;
 
 namespace CryptoValiza.Exchanges.Client;
@@ -23,10 +23,13 @@ public interface IExchangesClient
     Task<CurrencyTicker> GetTicker(CryptoExchange exchangeCode, string currencyCode);
 
 
-	Task<IReadOnlyCollection<Deposit>> GetDeposits(CryptoExchange exchangeCode,
-		DateTime startDate, DateTime endDate);
+    Task<IReadOnlyCollection<FiatDeposit>> GetFiatDeposits(CryptoExchange exchangeCode, string userId, DateTime startDate, DateTime endDate);
 
+    Task<IReadOnlyCollection<FiatWithdrawal>> GetFiatWithdrawals(CryptoExchange exchangeCode, string userId, DateTime startDate, DateTime endDate);
 
-	Task<IReadOnlyCollection<Withdrawal>> GetWithdrawals(CryptoExchange exchangeCode,
-		DateTime startDate, DateTime endDate);
+    Task<IReadOnlyCollection<CryptoDeposit>> GetCryptoDeposits(CryptoExchange exchangeCode, string userId, DateTime startDate, DateTime endDate);
+
+    Task<IReadOnlyCollection<CryptoWithdrawal>> GetCryptoWithdrawals(CryptoExchange exchangeCode, string userId, DateTime startDate, DateTime endDate);
+
+    Task<IReadOnlyCollection<Balance>> GetBalances(CryptoExchange exchangeCode, string userId, DateTime date);
 }

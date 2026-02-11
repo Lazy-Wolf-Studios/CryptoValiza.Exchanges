@@ -1,4 +1,5 @@
-﻿using CryptoValiza.Exchanges.Models.Enums;
+﻿using CryptoValiza.Exchanges.Common.Interfaces;
+using CryptoValiza.Exchanges.Models.Enums;
 using CryptoValiza.Exchanges.Models.Infrastructure;
 
 namespace CryptoValiza.Exchanges.Client.Infrastructure;

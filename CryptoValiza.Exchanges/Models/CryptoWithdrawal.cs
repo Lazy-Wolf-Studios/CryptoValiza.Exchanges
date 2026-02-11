@@ -1,6 +1,6 @@
 ﻿namespace CryptoValiza.Exchanges.Models;
 
-public class Withdrawal
+public class CryptoWithdrawal
 {
 
 

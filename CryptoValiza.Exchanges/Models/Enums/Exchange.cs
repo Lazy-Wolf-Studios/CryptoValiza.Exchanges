@@ -4,25 +4,26 @@ public enum CryptoExchange
 {
 	Binance,
 	Bitfinex,
-	BitGet,
-	BitMex,
-	ByBit,
-	CexIo,
-	Ftx,
-	GateIo,
+	Bitget,
+	Bybit,
+	CEX_IO,
+	Gate,
+	[Obsolete("Rebranded to HTX")]
 	Huobi,
-	Kraken,
+    HTX,
+    Kraken,
 	KuCoin,
 	Kuna,
 	OKX,
-	Poloniex,
 	WhiteBit,
-
 }
 
 public static class CryptoExchangeExtensions
 {
-	public static string GetExchangeName(this CryptoExchange exchange)
+    public static readonly string Kraken = GetExchangeName(CryptoExchange.Kraken);
+    public static readonly string WhiteBit = GetExchangeName(CryptoExchange.WhiteBit);
+
+    public static string GetExchangeName(this CryptoExchange exchange)
 	{
 		return Enum.GetName(exchange) ?? exchange.ToString();
 	}

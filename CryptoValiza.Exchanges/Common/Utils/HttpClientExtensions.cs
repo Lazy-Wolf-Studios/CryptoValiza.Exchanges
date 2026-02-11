@@ -22,28 +22,53 @@ internal static class HttpClientExtensions
         return result ?? new T();
     }
 
-    public static async Task<T> SendAsync<T>(this HttpClient client,
+    public static async Task<T> Get<T>(this HttpClient client,
+        Endpoint endpoint,
+        string queryParamsString,
+        Dictionary<string, string> headers,
+        CancellationToken cancellationToken) where T : new()
+    {
+        var requestUrl = queryParamsString.Length > 0 ? $"{endpoint.Url}?{queryParamsString}" : endpoint.Url;
+
+        var requestMessage = new HttpRequestMessage(endpoint.Method, requestUrl);
+
+        var result = await client.SendAsync<T>(requestMessage, headers, cancellationToken);
+
+        return result;
+    }
+
+    public static async Task<T> Post<T>(this HttpClient client,
         Endpoint endpoint,
         StringContent content,
         Dictionary<string, string> headers,
         CancellationToken cancellationToken) where T : new()
     {
-        var request = new HttpRequestMessage(endpoint.Method, endpoint.Url)
+        var requestMessage = new HttpRequestMessage(endpoint.Method, endpoint.Url)
         {
-            Content = content,
+            Content = content
         };
 
+        var result = await client.SendAsync<T>(requestMessage, headers, cancellationToken);
+
+        return result;
+    }
+
+    private static async Task<T> SendAsync<T>(this HttpClient client,
+        HttpRequestMessage requestMessage,
+        Dictionary<string, string> headers,
+        CancellationToken cancellationToken) where T : new()
+    {
         foreach (var header in headers)
         {
-            request.Headers.Add(header.Key, header.Value);
+            requestMessage.Headers.Add(header.Key, header.Value);
         }
 
-        using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+        using var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
         var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
 
         response.EnsureSuccessStatusCode(); // check response code?? 
 
-        var result = stream.ReadAndDeserializeFromJson<T>();
+        var result = stream.ReadAndDeserializeFromJson<T>(); // error handling ??
 
         return result ?? new T();
     }
