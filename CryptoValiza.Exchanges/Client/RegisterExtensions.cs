@@ -1,6 +1,7 @@
 ﻿using CryptoValiza.Exchanges.Binance.Services;
 using CryptoValiza.Exchanges.ByBit.Services;
 using CryptoValiza.Exchanges.Client.Infrastructure;
+using CryptoValiza.Exchanges.Common.Interfaces;
 using CryptoValiza.Exchanges.Kuna.Services;
 using CryptoValiza.Exchanges.Models.Enums;
 using CryptoValiza.Exchanges.Services.Interfaces;
@@ -12,7 +13,7 @@ namespace CryptoValiza.Exchanges.Client;
 
 public static class RegisterExtensions
 {
-    public static IServiceCollection AddCryptoValiza(this IServiceCollection services,
+    public static IServiceCollection AddCryptoValizaExchanges(this IServiceCollection services,
         CryptoValizaSettings? settings = null)
     {
         settings ??= new CryptoValizaSettings
@@ -64,11 +65,12 @@ public static class RegisterExtensions
         { CryptoExchange.Binance , "https://api.binance.com" },
         // TODO: need to think how to handle multiple endpoints separated by regions and access storages. Proxies?
         // { CryptoExchange.BinanceUs, "https://api.binance.us" },
-        { CryptoExchange.ByBit , "https://api.bybit.com"},
+        { CryptoExchange.Bybit , "https://api.bybit.com"},
         { CryptoExchange.Kuna , "https://api.kuna.io" },
         { CryptoExchange.WhiteBit , "https://whitebit.com"},
 
     };
+
     private static IServiceCollection RegisterKeyProvider(this IServiceCollection services, CryptoValizaSettings settings)
     {
         if (settings?.KeyRecords?.Any() == true)
@@ -86,6 +88,10 @@ public static class RegisterExtensions
     private static IServiceCollection RegisterServices(this IServiceCollection services, CryptoValizaSettings settings)
     {
         RegisterHealthCheckService(services, settings);
+        RegisterTickersService(services, settings);
+
+        RegisterBalancesService(services, settings);
+        RegisterTransfersService(services, settings);
 
         return services;
     }
@@ -94,13 +100,32 @@ public static class RegisterExtensions
     {
         // TODO: check settings, register only needed
         services.AddKeyedSingleton<IHealthCheckService, KunaHealthCheckService>(CryptoExchange.Kuna.GetExchangeName());
-        services.AddKeyedSingleton<IHealthCheckService, ByBitHealthCheckService>(CryptoExchange.ByBit.GetExchangeName());
+        services.AddKeyedSingleton<IHealthCheckService, ByBitHealthCheckService>(CryptoExchange.Bybit.GetExchangeName());
         services.AddKeyedSingleton<IHealthCheckService, BinanceHealthCheckService>(CryptoExchange.Binance.GetExchangeName());
-        services.AddKeyedSingleton<IHealthCheckService, WhiteBitHealthCheckService>(CryptoExchange.WhiteBit.GetExchangeName());
-
-        services.AddKeyedSingleton<ITickersService, BinanceTickersService>(CryptoExchange.Binance.GetExchangeName());
-        services.AddKeyedSingleton<ITickersService, KunaTickersService>(CryptoExchange.Kuna.GetExchangeName());
+        services.AddKeyedSingleton<IHealthCheckService, WhiteBitHealthCheckService>(CryptoExchangeExtensions.WhiteBit);
         
         return services;
     }
+
+    private static IServiceCollection RegisterTickersService(this IServiceCollection services, CryptoValizaSettings settings)
+    {
+        services.AddKeyedSingleton<ITickersService, BinanceTickersService>(CryptoExchange.Binance.GetExchangeName());
+        services.AddKeyedSingleton<ITickersService, KunaTickersService>(CryptoExchange.Kuna.GetExchangeName());
+
+        return services;
+    }
+
+    private static IServiceCollection RegisterBalancesService(this IServiceCollection services, CryptoValizaSettings settings)
+    {
+        services.AddKeyedSingleton<IBalancesService, WhiteBitBalancesService>(CryptoExchange.WhiteBit.GetExchangeName());
+
+        return services;
+    }
+
+    private static IServiceCollection RegisterTransfersService(this IServiceCollection services, CryptoValizaSettings settings)
+    {
+        services.AddKeyedSingleton<ITransfersService, BinanceTransfersService>(CryptoExchange.Binance.GetExchangeName());
+
+        return services;
+    }    
 }

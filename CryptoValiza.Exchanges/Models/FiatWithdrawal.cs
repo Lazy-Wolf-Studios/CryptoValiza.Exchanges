@@ -1,6 +1,5 @@
 ﻿namespace CryptoValiza.Exchanges.Models;
 
-public class Deposit
+public class FiatWithdrawal
 {
-
 }

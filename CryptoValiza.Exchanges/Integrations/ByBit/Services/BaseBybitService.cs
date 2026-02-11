@@ -4,7 +4,7 @@ namespace CryptoValiza.Exchanges.ByBit.Services;
 
 internal abstract class BaseBybitService(IHttpClientFactory httpClientFactory)
 {
-    private const string exchange = nameof(CryptoExchange.ByBit);
+    private const string exchange = nameof(CryptoExchange.Bybit);
 
     protected HttpClient _httpClient = httpClientFactory.CreateClient(exchange);
 }

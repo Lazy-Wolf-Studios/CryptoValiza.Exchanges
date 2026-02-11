@@ -12,7 +12,7 @@ public class HealthCheckTests
     public HealthCheckTests()
     {
         IServiceCollection services = new ServiceCollection();
-        services.AddCryptoValiza();
+        services.AddCryptoValizaExchanges();
 
         _client = services
             .BuildServiceProvider()
@@ -24,8 +24,7 @@ public class HealthCheckTests
 
     [Theory]
     [InlineData(CryptoExchange.Binance)]
-    [InlineData(CryptoExchange.ByBit)]
-    [InlineData(CryptoExchange.Kuna)]
+    [InlineData(CryptoExchange.Bybit)]
     [InlineData(CryptoExchange.WhiteBit)]
     public async Task GetServerTime_Returns_CurrentTime(CryptoExchange cryptoExchange)
     {
