@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -14,8 +14,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Integrations\Binance\Binance.csproj" />
-        <ProjectReference Include="..\Integrations\ByBit\ByBit.csproj" />
-        <ProjectReference Include="..\Integrations\Kuna\Kuna.csproj" />
+        <ProjectReference Include="..\Integrations\Bybit\Bybit.csproj" />
         <ProjectReference Include="..\Integrations\WhiteBit\WhiteBit.csproj" />
         <ProjectReference Include="..\Models\Models.csproj" />
         <ProjectReference Include="..\Services\Services.csproj" />

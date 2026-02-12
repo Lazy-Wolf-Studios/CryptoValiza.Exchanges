@@ -1,4 +1,4 @@
-﻿namespace CryptoValiza.Exchanges.ByBit.Models;
+﻿namespace CryptoValiza.Exchanges.Bybit.Models;
 
 internal class TimeResponse
 {

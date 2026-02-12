@@ -1,8 +1,7 @@
-﻿using CryptoValiza.Exchanges.Binance.Services;
-using CryptoValiza.Exchanges.ByBit.Services;
+using CryptoValiza.Exchanges.Binance.Services;
+using CryptoValiza.Exchanges.Bybit.Services;
 using CryptoValiza.Exchanges.Client.Infrastructure;
 using CryptoValiza.Exchanges.Common.Interfaces;
-using CryptoValiza.Exchanges.Kuna.Services;
 using CryptoValiza.Exchanges.Models.Enums;
 using CryptoValiza.Exchanges.Services.Interfaces;
 using CryptoValiza.Exchanges.WhiteBit.Services;
@@ -66,7 +65,6 @@ public static class RegisterExtensions
         // TODO: need to think how to handle multiple endpoints separated by regions and access storages. Proxies?
         // { CryptoExchange.BinanceUs, "https://api.binance.us" },
         { CryptoExchange.Bybit , "https://api.bybit.com"},
-        { CryptoExchange.Kuna , "https://api.kuna.io" },
         { CryptoExchange.WhiteBit , "https://whitebit.com"},
 
     };
@@ -99,8 +97,7 @@ public static class RegisterExtensions
     private static IServiceCollection RegisterHealthCheckService(this IServiceCollection services, CryptoValizaSettings settings)
     {
         // TODO: check settings, register only needed
-        services.AddKeyedSingleton<IHealthCheckService, KunaHealthCheckService>(CryptoExchange.Kuna.GetExchangeName());
-        services.AddKeyedSingleton<IHealthCheckService, ByBitHealthCheckService>(CryptoExchange.Bybit.GetExchangeName());
+        services.AddKeyedSingleton<IHealthCheckService, BybitHealthCheckService>(CryptoExchange.Bybit.GetExchangeName());
         services.AddKeyedSingleton<IHealthCheckService, BinanceHealthCheckService>(CryptoExchange.Binance.GetExchangeName());
         services.AddKeyedSingleton<IHealthCheckService, WhiteBitHealthCheckService>(CryptoExchangeExtensions.WhiteBit);
         
@@ -110,8 +107,6 @@ public static class RegisterExtensions
     private static IServiceCollection RegisterTickersService(this IServiceCollection services, CryptoValizaSettings settings)
     {
         services.AddKeyedSingleton<ITickersService, BinanceTickersService>(CryptoExchange.Binance.GetExchangeName());
-        services.AddKeyedSingleton<ITickersService, KunaTickersService>(CryptoExchange.Kuna.GetExchangeName());
-
         return services;
     }
 

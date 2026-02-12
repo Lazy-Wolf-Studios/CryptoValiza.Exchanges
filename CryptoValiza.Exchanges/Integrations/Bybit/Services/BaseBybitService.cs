@@ -1,6 +1,6 @@
 ﻿using CryptoValiza.Exchanges.Models.Enums;
 
-namespace CryptoValiza.Exchanges.ByBit.Services;
+namespace CryptoValiza.Exchanges.Bybit.Services;
 
 internal abstract class BaseBybitService(IHttpClientFactory httpClientFactory)
 {

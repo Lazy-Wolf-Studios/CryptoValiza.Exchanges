@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
@@ -9,9 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integration
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Binance", "Integrations\Binance\Binance.csproj", "{CFB1F51C-A258-4222-8E43-9E3873D496A0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ByBit", "Integrations\ByBit\ByBit.csproj", "{1680655E-494A-43D4-AB44-3EDD6E11D853}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuna", "Integrations\Kuna\Kuna.csproj", "{2A64DBAD-BE0E-4379-9A37-0A083A78347B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bybit", "Integrations\Bybit\Bybit.csproj", "{1680655E-494A-43D4-AB44-3EDD6E11D853}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhiteBit", "Integrations\WhiteBit\WhiteBit.csproj", "{AE59AF67-4F6A-4EF7-9AB7-ACD7639C3139}"
 EndProject
@@ -43,10 +41,6 @@ Global
 		{1680655E-494A-43D4-AB44-3EDD6E11D853}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1680655E-494A-43D4-AB44-3EDD6E11D853}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1680655E-494A-43D4-AB44-3EDD6E11D853}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2A64DBAD-BE0E-4379-9A37-0A083A78347B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A64DBAD-BE0E-4379-9A37-0A083A78347B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A64DBAD-BE0E-4379-9A37-0A083A78347B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A64DBAD-BE0E-4379-9A37-0A083A78347B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE59AF67-4F6A-4EF7-9AB7-ACD7639C3139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AE59AF67-4F6A-4EF7-9AB7-ACD7639C3139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE59AF67-4F6A-4EF7-9AB7-ACD7639C3139}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -78,7 +72,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CFB1F51C-A258-4222-8E43-9E3873D496A0} = {4E1285FC-21DC-4F7E-981B-79F3BB923C9E}
 		{1680655E-494A-43D4-AB44-3EDD6E11D853} = {4E1285FC-21DC-4F7E-981B-79F3BB923C9E}
-		{2A64DBAD-BE0E-4379-9A37-0A083A78347B} = {4E1285FC-21DC-4F7E-981B-79F3BB923C9E}
 		{AE59AF67-4F6A-4EF7-9AB7-ACD7639C3139} = {4E1285FC-21DC-4F7E-981B-79F3BB923C9E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

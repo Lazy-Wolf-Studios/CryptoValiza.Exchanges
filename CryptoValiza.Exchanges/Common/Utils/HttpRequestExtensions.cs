@@ -1,4 +1,4 @@
-﻿namespace CryptoValiza.Exchanges.Common.Utils;
+namespace CryptoValiza.Exchanges.Common.Utils;
 
 using System.Security.Cryptography;
 using System.Text;
@@ -12,17 +12,6 @@ internal static class HttpRequestExtensions
         using var hmac = new HMACSHA256(keyBytes);
         var messageBytes = Encoding.UTF8.GetBytes(stringToSign);
 
-        var hashedBytes = hmac.ComputeHash(messageBytes);
-
-        return hashedBytes;
-    }
-
-    // used by Kuna
-    internal static byte[] ComputeSignatureSHA384(string stringToSign, string privateKey)
-    {
-        var keyBytes = Encoding.UTF8.GetBytes(privateKey);
-        using var hmac = new HMACSHA384(keyBytes);
-        var messageBytes = Encoding.UTF8.GetBytes(stringToSign);
         var hashedBytes = hmac.ComputeHash(messageBytes);
 
         return hashedBytes;

@@ -1,12 +1,12 @@
-﻿using CryptoValiza.Exchanges.ByBit.Models;
+﻿using CryptoValiza.Exchanges.Bybit.Models;
 using CryptoValiza.Exchanges.Common.Utils;
 using CryptoValiza.Exchanges.Models;
 using CryptoValiza.Exchanges.Models.Infrastructure;
 using CryptoValiza.Exchanges.Services.Interfaces;
 
-namespace CryptoValiza.Exchanges.ByBit.Services;
+namespace CryptoValiza.Exchanges.Bybit.Services;
 
-internal class ByBitHealthCheckService(IHttpClientFactory httpClientFactory)
+internal class BybitHealthCheckService(IHttpClientFactory httpClientFactory)
     : BaseBybitService(httpClientFactory), IHealthCheckService
 {
     private readonly Endpoint GetServerTimeEndpoint = new Endpoint(HttpMethod.Get, "/v3/public/time");
