@@ -1,5 +1,5 @@
 using CryptoValiza.Exchanges.Binance.Services;
-using CryptoValiza.Exchanges.ByBit.Services;
+using CryptoValiza.Exchanges.Bybit.Services;
 using CryptoValiza.Exchanges.Client.Infrastructure;
 using CryptoValiza.Exchanges.Common.Interfaces;
 using CryptoValiza.Exchanges.Models.Enums;
@@ -97,7 +97,7 @@ public static class RegisterExtensions
     private static IServiceCollection RegisterHealthCheckService(this IServiceCollection services, CryptoValizaSettings settings)
     {
         // TODO: check settings, register only needed
-        services.AddKeyedSingleton<IHealthCheckService, ByBitHealthCheckService>(CryptoExchange.Bybit.GetExchangeName());
+        services.AddKeyedSingleton<IHealthCheckService, BybitHealthCheckService>(CryptoExchange.Bybit.GetExchangeName());
         services.AddKeyedSingleton<IHealthCheckService, BinanceHealthCheckService>(CryptoExchange.Binance.GetExchangeName());
         services.AddKeyedSingleton<IHealthCheckService, WhiteBitHealthCheckService>(CryptoExchangeExtensions.WhiteBit);
         
