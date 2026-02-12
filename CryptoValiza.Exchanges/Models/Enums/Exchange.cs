@@ -1,4 +1,4 @@
-﻿namespace CryptoValiza.Exchanges.Models.Enums;
+namespace CryptoValiza.Exchanges.Models.Enums;
 
 public enum CryptoExchange
 {
@@ -13,7 +13,6 @@ public enum CryptoExchange
     HTX,
     Kraken,
 	KuCoin,
-	Kuna,
 	OKX,
 	WhiteBit,
 }

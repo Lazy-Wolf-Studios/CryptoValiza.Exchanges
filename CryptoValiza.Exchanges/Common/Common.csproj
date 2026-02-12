@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -15,7 +15,6 @@
     <ItemGroup>
         <InternalsVisibleTo Include="CryptoValiza.Exchanges.Binance" />
         <InternalsVisibleTo Include="CryptoValiza.Exchanges.ByBit" />
-        <InternalsVisibleTo Include="CryptoValiza.Exchanges.Kuna" />
         <InternalsVisibleTo Include="CryptoValiza.Exchanges.WhiteBit" />
 
         <InternalsVisibleTo Include="$(AssemblyName).Tests" />
