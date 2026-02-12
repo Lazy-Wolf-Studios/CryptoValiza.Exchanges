@@ -14,7 +14,7 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="CryptoValiza.Exchanges.Binance" />
-        <InternalsVisibleTo Include="CryptoValiza.Exchanges.ByBit" />
+        <InternalsVisibleTo Include="CryptoValiza.Exchanges.Bybit" />
         <InternalsVisibleTo Include="CryptoValiza.Exchanges.WhiteBit" />
 
         <InternalsVisibleTo Include="$(AssemblyName).Tests" />
