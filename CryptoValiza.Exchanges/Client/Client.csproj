@@ -6,6 +6,15 @@
         <Nullable>enable</Nullable>
         <AssemblyName>CryptoValiza.Exchanges.$(MSBuildProjectName)</AssemblyName>
         <RootNamespace>CryptoValiza.Exchanges.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+
+        <IsPackable>true</IsPackable>
+        <PackageId>CryptoValiza.Exchanges.Client</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>Lycanthrope</Authors>
+        <Company>Lazy Wolf Studios</Company>
+        <Description>Common Client for big amount of crypto CEXes</Description>
+        <PackageTags>cryptocurrency</PackageTags>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     </PropertyGroup>
 
     <ItemGroup>
